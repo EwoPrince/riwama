@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "419250487030",
+    "project_id": "riwama-4d9b4",
+    "storage_bucket": "riwama-4d9b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419250487030:android:354d641415bef08f13f6d7",
+        "android_client_info": {
+          "package_name": "com.riwama.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCazJUGhRbpqJ3w0hDys4aJwAwozzrGpeY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
