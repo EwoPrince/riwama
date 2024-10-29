@@ -29,6 +29,7 @@ class _SupervisorIndustryState extends ConsumerState<SupervisorIndustry>
 
   Future fetchdata() async {
     ref.read(mapProvider).fetchLocation;
+    var RData = ref.watch(industryProvider).recept;
     var PRData = ref.watch(industryProvider).worldDataPR;
     var IRData = ref.watch(industryProvider).worldDataIR;
     final IR = IRData.where((element) => element.cleared == false).toList();
@@ -80,6 +81,31 @@ class _SupervisorIndustryState extends ConsumerState<SupervisorIndustry>
                       return PickUpPopUp(context, location);
                     });
               }),
+        ),
+      );
+    }
+
+    for (var location in RData) {
+      var lat = double.tryParse(location.lat);
+      var lon = double.tryParse(location.lon);
+
+      _markers.add(
+        Marker(
+          markerId: MarkerId(location.receptacleId.toString()),
+          position: LatLng(lat!, lon!),
+          icon: await DropBitmap(context).toBitmapDescriptor(
+              logicalSize: const Size(80, 80), imageSize: const Size(80, 80)),
+          infoWindow: InfoWindow(
+            title: "Receptacle",
+            onTap: () {
+              // showDialog(
+              //     useRootNavigator: false,
+              //     context: context,
+              //     builder: (context) {
+              //       return InterventionPopUp(context, location);
+              //     });
+            },
+          ),
         ),
       );
     }

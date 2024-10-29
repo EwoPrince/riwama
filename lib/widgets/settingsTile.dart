@@ -36,7 +36,7 @@ Widget SettingsTile(
                     color: Theme.of(context).dividerColor,
                   ),
                 ),
-      color: Theme.of(context).colorScheme.inversePrimary,
+      color: Theme.of(context).primaryColor,
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,

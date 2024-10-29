@@ -37,7 +37,7 @@ class _IndustryState extends ConsumerState<Industry>
         Marker(
           markerId: MarkerId(location.receptacleId.toString()),
           position: LatLng(lat!, lon!),
-          icon: await MeBitmap(context).toBitmapDescriptor(
+          icon: await DropBitmap(context).toBitmapDescriptor(
               logicalSize: const Size(80, 80), imageSize: const Size(80, 80)),
           infoWindow: InfoWindow(
             title: "Receptacle",

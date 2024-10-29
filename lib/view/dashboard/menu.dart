@@ -97,7 +97,7 @@ class _MenuState extends ConsumerState<Menu> {
                                   enableInfiniteScroll: true,
                                   autoPlay: true,
                                   autoPlayInterval: const Duration(seconds: 3),
-                                  height: 124.0,
+                                  height: 350.0,
                                   onPageChanged: (index, _) {
                                     setState(() {
                                       currentSlide = index;
