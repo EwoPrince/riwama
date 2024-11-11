@@ -4,9 +4,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:riwama/main.dart';
-import 'package:riwama/x.dart';
 
+  const serverKey =  'AAAAIXKs1OQ:APA91bGLdaMgnDQW5tl_Pxihqg62OOl-BIuNkUsHL7WG6wvnqW6t1_9Xle9I3jDBnwdmA1D57Z6MBE2EI42vcv4A4lA4hEg-Yh4CHUnGRiM0ZBVnEwPXJrkF0_4996oDWxt07h4_GOyR'; // Replace with your FCM server key
+//  const apiKey = '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';
 class NotificationService {
+
   static Future<void> showFlutterNotification(RemoteMessage message) async {
     RemoteNotification? notification = message.notification;
     AndroidNotification? android = message.notification?.android;

@@ -144,9 +144,9 @@ extension DoubleClick on Widget {
   }
 }
 
-const apiKey = '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';
+// const apiKey = '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';
 
-const serverKey =
-    'AAAAIXKs1OQ:APA91bGLdaMgnDQW5tl_Pxihqg62OOl-BIuNkUsHL7WG6wvnqW6t1_9Xle9I3jDBnwdmA1D57Z6MBE2EI42vcv4A4lA4hEg-Yh4CHUnGRiM0ZBVnEwPXJrkF0_4996oDWxt07h4_GOyR'; // Replace with your FCM server key
+// const serverKey =
+//     'AAAAIXKs1OQ:APA91bGLdaMgnDQW5tl_Pxihqg62OOl-BIuNkUsHL7WG6wvnqW6t1_9Xle9I3jDBnwdmA1D57Z6MBE2EI42vcv4A4lA4hEg-Yh4CHUnGRiM0ZBVnEwPXJrkF0_4996oDWxt07h4_GOyR'; // Replace with your FCM server key
 
-const String testDevice = '1EF95E3F71E6CFA3ADC906A384D4BF28';
+// const String testDevice = '1EF95E3F71E6CFA3ADC906A384D4BF28';
