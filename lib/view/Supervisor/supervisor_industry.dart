@@ -137,12 +137,12 @@ class _SupervisorIndustryState extends ConsumerState<SupervisorIndustry>
             color: Theme.of(context).primaryColor,
           ),
         ).onTap(() {
-              goto(context, Menu.routeName, null);
+          goto(context, Menu.routeName, null);
         }),
         actions: [
           IconButton(
             onPressed: () {
-          Scaffold.of(context).openEndDrawer();
+              Scaffold.of(context).openEndDrawer();
             },
             icon: Icon(Icons.menu),
           ),
@@ -191,19 +191,26 @@ class _SupervisorIndustryState extends ConsumerState<SupervisorIndustry>
           }),
 
       /// amazing floating button
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          XshowModalBottomSheet(context, ref);
-        },
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        clipBehavior: Clip.antiAlias,
-        child: Icon(
-          Icons.delete_forever_rounded,
-          color: Theme.of(context).scaffoldBackgroundColor,
-          size: 32,
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 3,
+            color: Theme.of(context).scaffoldBackgroundColor,
+          ),
+          shape: BoxShape.circle,
+          color: Theme.of(context).colorScheme.primary,
         ),
-        elevation: 20,
-      ),
+        child: Padding(
+          padding: EdgeInsets.all(18.0),
+          child: Icon(
+            Icons.delete_forever_outlined,
+            color: Theme.of(context).scaffoldBackgroundColor,
+            size: 32,
+          ),
+        ),
+      ).onTap(() {
+        XshowModalBottomSheet(context, ref);
+      }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

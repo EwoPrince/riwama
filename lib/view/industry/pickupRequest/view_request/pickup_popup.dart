@@ -71,7 +71,7 @@ Widget PickUpPopUp(
           ),
           SizedBox(width: 6),
           SizedBox(
-            width: size.width * 0.3,
+            width: size.width * 0.4,
             child: button(context, 'View', () {
               goto(context, PickupView.routeName, data);
             }),

@@ -17,15 +17,16 @@ class _SelectCardState extends State<SelectCard> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
+      padding: EdgeInsets.all(8),
       height: size.height * 0.2,
       width: size.width * 0.38,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: Theme.of(context).primaryColor,
           width: 3,
         ),
-        color: Theme.of(context).colorScheme.inversePrimary,
+        color: Theme.of(context).colorScheme.inversePrimary.withOpacity(0.3),
       ),
       child: Center(
         child: Column(

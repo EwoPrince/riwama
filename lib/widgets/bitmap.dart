@@ -1,81 +1,145 @@
 import 'package:flutter/material.dart';
 
 Widget IRBitmap(BuildContext context) {
-  return Container(
-    decoration: BoxDecoration(
-      color: Colors.red,
-      shape: BoxShape.circle,
-      border: Border.all(
-        width: 3,
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
-    ),
-    child: Center(
-      child: Icon(
-        Icons.live_help,
-        size: 50,
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
+  return SizedBox(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.red,
+            shape: BoxShape.circle,
+            border: Border.all(
+              width: 3,
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
+          ),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child: Icon(
+                Icons.live_help,
+                size: 30,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          height: 12,
+          width: 3,
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
+      ],
     ),
   );
 }
 
 Widget PRBitmap(BuildContext context) {
-  return Container(
-    decoration: BoxDecoration(
-      color: Colors.blue,
-      shape: BoxShape.circle,
-      border: Border.all(
-        width: 3,
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
-    ),
-    child: Center(
-      child: Icon(
-        Icons.fire_truck,
-        size: 50,
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
+  return SizedBox(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            shape: BoxShape.circle,
+            border: Border.all(
+              width: 3,
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
+          ),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child: Icon(
+                Icons.fire_truck,
+                size: 30,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          height: 12,
+          width: 3,
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
+      ],
     ),
   );
 }
 
 Widget DropBitmap(BuildContext context) {
-  return Container(
-    decoration: BoxDecoration(
+  return SizedBox(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          decoration: BoxDecoration(
       color: Colors.green,
-      shape: BoxShape.circle,
-      border: Border.all(
-        width: 3,
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
-    ),
-    child: Center(
-      child: Icon(
+            shape: BoxShape.circle,
+            border: Border.all(
+              width: 3,
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
+          ),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child: Icon(
         Icons.recycling,
-        size: 50,
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
+                size: 30,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          height: 12,
+          width: 3,
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
+      ],
     ),
   );
 }
 
 Widget MeBitmap(BuildContext context) {
-  return Container(
-    decoration: BoxDecoration(
+  return SizedBox(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          decoration: BoxDecoration(
       color: Colors.deepOrange,
-      shape: BoxShape.circle,
-      border: Border.all(
-        width: 3,
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
-    ),
-    child: Center(
-      child: Icon(
-        Icons.accessibility,
-        size: 50,
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
+            shape: BoxShape.circle,
+            border: Border.all(
+              width: 3,
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
+          ),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child: Icon(
+        Icons.recycling,
+                size: 30,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          height: 12,
+          width: 3,
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
+      ],
     ),
   );
 }

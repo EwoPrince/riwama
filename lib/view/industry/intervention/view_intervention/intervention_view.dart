@@ -193,10 +193,8 @@ class _InterventionViewState extends ConsumerState<InterventionView> {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600)),
                     Text(
-                      DateFormat.yMMMd().format(widget.snap.datePublished),
-                    ).onTap(() {
-                      _selectDate(context, widget.snap.datePublished);
-                    }),
+                      widget.snap.name,
+                    )
                   ],
                 ),
                 SizedBox(height: 6),

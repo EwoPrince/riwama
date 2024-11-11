@@ -6,15 +6,17 @@ import 'package:riwama/provider/industry_provider.dart';
 import 'package:riwama/view/Supervisor/add_slide.dart';
 import 'package:riwama/view/Supervisor/receptacle_sample.dart';
 import 'package:riwama/view/Supervisor/supervisor_form.dart';
+import 'package:riwama/view/profile/personal_profile.dart';
 import 'package:riwama/view/profile/pic_profile_view.dart';
 import 'package:riwama/view/account/general_setting.dart';
 import 'package:riwama/view/industry/intervention/view_intervention/list_intervention.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:riwama/view/industry/pickupRequest/view_request/pickup_row.dart';
 import 'package:riwama/view/userguild/helpcenter.dart';
+import 'package:riwama/widgets/select_card.dart';
 import 'package:riwama/widgets/settingsTile.dart';
 import 'package:riwama/x.dart';
-import '../profile/personal_profile.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Menu extends ConsumerStatefulWidget {
   static const routeName = '/Menu';
@@ -35,11 +37,14 @@ class _MenuState extends ConsumerState<Menu> {
     super.initState();
     futureHolder = fetchdata();
   }
-  CarouselSliderController buttonCarouselController = CarouselSliderController();
+
+  CarouselSliderController buttonCarouselController =
+      CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
     final timeHour = DateTime.now().hour;
+    final user = ref.watch(authProvider).user;
 
     return Scaffold(
       body: NestedScrollView(
@@ -52,18 +57,9 @@ class _MenuState extends ConsumerState<Menu> {
                 pinned: true,
                 floating: true,
                 stretch: true,
-                expandedHeight: 300.0,
+                expandedHeight: 360.0,
                 flexibleSpace: FlexibleSpaceBar(
-                  title: Text(
-                    timeHour < 12
-                        ? 'Good Morning'
-                        : timeHour < 16
-                            ? 'Good Afternoon'
-                            : 'Good Evening',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  title: SizedBox(),
                   background: FutureBuilder(
                       future: futureHolder,
                       builder: (context, snapshot) {
@@ -112,8 +108,8 @@ class _MenuState extends ConsumerState<Menu> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.9,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: .0),
+                                        margin:
+                                            EdgeInsets.symmetric(horizontal: 0),
                                         child: ExtendedImage.network(
                                           image.profImage,
                                           fit: BoxFit.cover,
@@ -133,87 +129,47 @@ class _MenuState extends ConsumerState<Menu> {
             ),
           ];
         },
-        body: Consumer(builder: (context, ref, child) {
-          final user = ref.watch(authProvider).user;
-          return ListView(
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: ListView(
             children: [
-              SizedBox(height: 120),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Hero(
-                      tag: "${user!.photoUrl}",
-                      child: ExtendedImage.network(
-                        "${user.photoUrl}",
-                        width: 120,
-                        height: 120,
-                        fit: BoxFit.cover,
-                        cache: true,
-                        shape: BoxShape.circle,
-                      ),
-                    ).onTap(() {
-                      goto(
-                        context,
-                        PicProfileView.routeName,
-                        "${user.photoUrl}",
-                      );
-                    }),
+              SizedBox(height: 80),
+              FittedBox(
+                child: Text(
+                  timeHour < 12
+                      ? 'Good Morning ${user!.firstName}'
+                      : timeHour < 16
+                          ? 'Good Afternoon ${user!.firstName}'
+                          : 'Good Evening ${user!.firstName}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      FittedBox(
-                        child: Text(
-                          "${user.firstName} ${user.lastName}",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      FittedBox(
-                        child: Text(
-                          "${user.email}",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      FittedBox(
-                        child: Text(
-                          "${user.phone}",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ).onTap(() {
-                    goto(
-                      context,
-                      PersonalProfile.routeName,
-                      null,
-                    );
-                  }),
-                ],
+                ),
+              ).onTap(() {
+                goto(
+                  context,
+                  PersonalProfile.routeName,
+                  null,
+                );
+              }),
+              SizedBox(height: 8),
+              FittedBox(
+                child: Text(
+                  'What Service could we provide you',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
+                ),
               ),
               SizedBox(height: 28),
               user.accountLevel == 1
                   ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      padding: EdgeInsets.symmetric(horizontal: 12),
                       child: SettingsTile(
                               context,
-                              Icons.settings_outlined,
+                              Icons.family_restroom,
                               'Join RIWAMA',
                               'Become a public service provider',
                               true,
@@ -224,16 +180,50 @@ class _MenuState extends ConsumerState<Menu> {
                     )
                   : SizedBox.shrink(),
               SizedBox(height: 3),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SelectCard(
+                    iconData: Icons.call,
+                    title: 'Contact RIWAMA Front Desk',
+                  ).onTap(() async {
+                    final Uri launchUri = Uri(
+                      scheme: 'tel',
+                      path: '+2347085136311',
+                    );
+                    try {
+                      await launchUrl(launchUri);
+                    } catch (error) {
+                      showMessage(context, "Cannot dial");
+                    }
+                  }),
+                  SelectCard(
+                    iconData: Icons.electric_rickshaw_rounded,
+                    title: 'Call Instant Tow Request',
+                  ).onTap(() async {
+                    final Uri launchUri = Uri(
+                      scheme: 'tel',
+                      path: '+2347085136311',
+                    );
+                    try {
+                      await launchUrl(launchUri);
+                    } catch (error) {
+                      showMessage(context, "Cannot dial");
+                    }
+                  }),
+                ],
+              ),
+              SizedBox(height: 3),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: SettingsTile(
-                        context,
-                        Icons.settings_outlined,
-                        'Intervention List',
-                        'Tweak your account how ever you would',
-                        user.accountLevel == 1 ? false : true,
-                        false)
-                    .onTap(() {
+                  context,
+                  Icons.notifications_active_outlined,
+                  'Intervention List',
+                  'See a list of Intervention request you have made',
+                  user.accountLevel == 1 ? false : true,
+                  false,
+                ).onTap(() {
                   goto(
                     context,
                     InterventionList.routeName,
@@ -246,9 +236,9 @@ class _MenuState extends ConsumerState<Menu> {
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: SettingsTile(
                         context,
-                        Icons.settings_outlined,
+                        Icons.notifications_active_outlined,
                         'Pick Up List',
-                        'Tweak your account how ever you would',
+                        'See a list of Pick Up request you have made',
                         false,
                         false)
                     .onTap(() {
@@ -263,13 +253,8 @@ class _MenuState extends ConsumerState<Menu> {
               user.accountLevel >= 2
                   ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: SettingsTile(
-                              context,
-                              Icons.settings_outlined,
-                              'Add Slide',
-                              'Update to the RIWAMA Slides',
-                              false,
-                              false)
+                      child: SettingsTile(context, Icons.add_box, 'Add Slide',
+                              'Update to the RIWAMA Slides', false, false)
                           .onTap(() {
                         goto(context, AddSlide.routeName, null);
                       }),
@@ -281,7 +266,7 @@ class _MenuState extends ConsumerState<Menu> {
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: SettingsTile(
                               context,
-                              Icons.settings_outlined,
+                              Icons.add_location_alt,
                               'Add Receptacle',
                               'Update to the public a Receptacle location',
                               false,
@@ -291,6 +276,71 @@ class _MenuState extends ConsumerState<Menu> {
                       }),
                     )
                   : SizedBox.shrink(),
+              if (user.accountLevel >= 2) SizedBox(height: 3),
+              if (user.accountLevel >= 2)
+                Wrap(
+                  alignment: WrapAlignment.spaceEvenly,
+                  runAlignment: WrapAlignment.spaceEvenly,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    SelectCard(
+                      iconData: Icons.call,
+                      title: 'S.A on waste Operation',
+                    ).onTap(() async {
+                      final Uri launchUri = Uri(
+                        scheme: 'tel',
+                        path: '+2347085136311',
+                      );
+                      try {
+                        await launchUrl(launchUri);
+                      } catch (error) {
+                        showMessage(context, "Cannot dial");
+                      }
+                    }),
+                    SelectCard(
+                      iconData: Icons.call,
+                      title: 'S.A on Inspection',
+                    ).onTap(() async {
+                      final Uri launchUri = Uri(
+                        scheme: 'tel',
+                        path: '+2347085136311',
+                      );
+                      try {
+                        await launchUrl(launchUri);
+                      } catch (error) {
+                        showMessage(context, "Cannot dial");
+                      }
+                    }),
+                    SelectCard(
+                      iconData: Icons.call,
+                      title: 'S.A on Intervention',
+                    ).onTap(() async {
+                      final Uri launchUri = Uri(
+                        scheme: 'tel',
+                        path: '+2347085136311',
+                      );
+                      try {
+                        await launchUrl(launchUri);
+                      } catch (error) {
+                        showMessage(context, "Cannot dial");
+                      }
+                    }),
+                    SelectCard(
+                      iconData: Icons.call,
+                      title: 'S.A on Community Market',
+                    ).onTap(() async {
+                      final Uri launchUri = Uri(
+                        scheme: 'tel',
+                        path: '+2347085136311',
+                      );
+                      try {
+                        await launchUrl(launchUri);
+                      } catch (error) {
+                        showMessage(context, "Cannot dial");
+                      }
+                    }),
+                  ],
+                ),
               SizedBox(height: 3),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -329,8 +379,8 @@ class _MenuState extends ConsumerState<Menu> {
               ),
               SizedBox(height: 30),
             ],
-          );
-        }),
+          ),
+        ),
       ),
     );
   }

@@ -1,27 +1,27 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:riwama/model/interventionRequest.dart';
+import 'package:riwama/model/receptacle.dart';
 import 'package:riwama/view/industry/intervention/view_intervention/intervention_view.dart';
 import 'package:riwama/widgets/button.dart';
 import 'package:riwama/x.dart';
 
-Widget InterventionPopUp(
+Widget ReceptaclePopUp(
   BuildContext context,
-  Interventionrequest data,
+  Receptacle data,
 ) {
   final size = MediaQuery.of(context).size;
   return Dialog(
     child: Container(
       padding: EdgeInsets.all(8.0),
       width: size.width * 0.65,
-      height: size.height * 0.45,
+      height: size.height * 0.4,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 10),
           Text(
-            "Intervention Request",
+            "Receptacle PopUp",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -33,7 +33,7 @@ Widget InterventionPopUp(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Post on :',
+                'Updated on :',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -47,7 +47,7 @@ Widget InterventionPopUp(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Post by :',
+                'Updated by :',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ Widget InterventionPopUp(
               return ConstrainedBox(
                 constraints: short,
                 child: ExtendedImage.network(
-                  data.proofImage,
+                  data.profImage,
                   fit: BoxFit.contain,
                   cache: true,
                   cacheMaxAge: Duration(days: 7),
@@ -73,12 +73,12 @@ Widget InterventionPopUp(
             }),
           ),
           SizedBox(width: 6),
-          SizedBox(
-            width: size.width * 0.4,
-            child: button(context, 'View', () {
-              goto(context, InterventionView.routeName, data);
-            }),
-          ),
+          // SizedBox(
+          //   width: size.width * 0.4,
+          //   child: button(context, 'View', () {
+          //     goto(context, InterventionView.routeName, data);
+          //   }),
+          // ),
         ],
       ),
     ),

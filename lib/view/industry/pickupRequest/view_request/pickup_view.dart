@@ -191,7 +191,7 @@ class _PickupViewState extends ConsumerState<PickupView> {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w600)),
                     Text(
-                      DateFormat.yMMMd().format(widget.snap.datePublished),
+                      widget.snap.name,
                     ).onTap(() {
                       _selectDate(context, widget.snap.datePublished);
                     }),
@@ -202,7 +202,10 @@ class _PickupViewState extends ConsumerState<PickupView> {
                 /// IMAGE SECTION OF THE POST
                 Text(
                   "Location for PickUp:",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 SizedBox(
                   width: ize.width * 0.98,

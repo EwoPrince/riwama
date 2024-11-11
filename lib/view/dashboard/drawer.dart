@@ -5,6 +5,7 @@ import 'package:riwama/provider/auth_provider.dart';
 import 'package:riwama/provider/theme_provider.dart';
 import 'package:riwama/view/Supervisor/supervisor_form.dart';
 import 'package:riwama/view/dashboard/land.dart';
+import 'package:riwama/view/dashboard/menu.dart';
 import 'package:riwama/view/profile/personal_profile.dart';
 import 'package:riwama/view/industry/intervention/view_intervention/list_intervention.dart';
 import 'package:riwama/view/industry/pickupRequest/view_request/pickup_row.dart';
@@ -67,16 +68,13 @@ class _NavDrawerState extends ConsumerState<NavDrawer> {
                                 tag: user!.photoUrl,
                                 child: ExtendedImage.network(
                                   "${user.photoUrl}",
-                                  width: 120,
-                                  height: 120,
+                                  width: 130,
+                                  height: 130,
                                   fit: BoxFit.cover,
                                   cache: true,
                                   shape: BoxShape.circle,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30.0),
-                                  ),
                                   border: Border.all(
-                                    width: 3,
+                                    width: 2,
                                     color: Theme.of(context).primaryColor,
                                   ),
                                 ).onTap(() {
@@ -145,7 +143,7 @@ class _NavDrawerState extends ConsumerState<NavDrawer> {
                       SizedBox(height: 12),
                       drawerTile(
                         Icons.notifications_active_outlined,
-                        'Pick Up Request',
+                        'Pick Up Request List',
                       ).onTap(() {
                         goto(
                           context,
@@ -156,7 +154,7 @@ class _NavDrawerState extends ConsumerState<NavDrawer> {
                       SizedBox(height: 12),
                       drawerTile(
                         Icons.notifications_active_outlined,
-                        'Intervention',
+                        'Intervention List',
                       ).onTap(() {
                         goto(
                           context,
@@ -175,9 +173,17 @@ class _NavDrawerState extends ConsumerState<NavDrawer> {
                           null,
                         );
                       }),
-                      SizedBox(
-                        height: 24,
-                      ),
+                      SizedBox(height: 12),
+                      drawerTile(
+                        Icons.menu,
+                        'Menu',
+                      ).onTap(() {
+                        goto(
+                          context,
+                          Menu.routeName,
+                          null,
+                        );
+                      }),
                     ],
                   ),
                 ],
@@ -289,14 +295,14 @@ class _NavDrawerState extends ConsumerState<NavDrawer> {
                 value = ref
                     .watch(themeProvider.notifier)
                     .changeMode(context, !snapshot.data!);
-                
               },
-thumbIcon: WidgetStateProperty.resolveWith<Icon?>((Set<WidgetState> states) {
-    if (states.contains(WidgetState.disabled)) {
-      return Icon(Icons.sunny);
-    }
-    return Icon(Icons.mode_night);
-  }),
+              thumbIcon: WidgetStateProperty.resolveWith<Icon?>(
+                  (Set<WidgetState> states) {
+                if (states.contains(WidgetState.disabled)) {
+                  return Icon(Icons.sunny);
+                }
+                return Icon(Icons.mode_night);
+              }),
             );
           },
         );
