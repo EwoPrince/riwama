@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riwama/provider/industry_provider.dart';
 import 'package:riwama/provider/map_provider.dart';
+import 'package:riwama/view/Supervisor/receptacle/receptacle_popUp.dart';
 import 'package:riwama/view/dashboard/menu.dart';
+import 'package:riwama/view/industry/Towing/view_towing/towing_popup.dart';
 import 'package:riwama/view/industry/intervention/view_intervention/intervention_popup.dart';
 import 'package:riwama/view/industry/pickupRequest/view_request/pickup_popup.dart';
 import 'package:riwama/widgets/bitmap.dart';
@@ -32,8 +34,10 @@ class _SupervisorIndustryState extends ConsumerState<SupervisorIndustry>
     var RData = ref.watch(industryProvider).recept;
     var PRData = ref.watch(industryProvider).worldDataPR;
     var IRData = ref.watch(industryProvider).worldDataIR;
+    var TRData = ref.watch(industryProvider).worldDataTR;
     final IR = IRData.where((element) => element.cleared == false).toList();
     final PR = PRData.where((element) => element.cleared == false).toList();
+    final TR = TRData.where((element) => element.cleared == false).toList();
 
     for (var location in IR) {
       var lat = double.tryParse(location.lat);
@@ -85,6 +89,30 @@ class _SupervisorIndustryState extends ConsumerState<SupervisorIndustry>
       );
     }
 
+    for (var location in TR) {
+      var lat = double.tryParse(location.lat);
+      var lon = double.tryParse(location.lon);
+      _markers.add(
+        Marker(
+          markerId: MarkerId(location.TowRequestId.toString()),
+          position: LatLng(lat!, lon!),
+          icon: await TBitmap(context).toBitmapDescriptor(
+              logicalSize: const Size(80, 80), imageSize: const Size(80, 80)),
+          infoWindow: InfoWindow(
+              title: "Tow Service Request",
+              snippet: 'Posted by ${location.name}',
+              onTap: () {
+                showDialog(
+                    useRootNavigator: false,
+                    context: context,
+                    builder: (context) {
+                      return TowingPopUp(context, location);
+                    });
+              }),
+        ),
+      );
+    }
+
     for (var location in RData) {
       var lat = double.tryParse(location.lat);
       var lon = double.tryParse(location.lon);
@@ -98,12 +126,12 @@ class _SupervisorIndustryState extends ConsumerState<SupervisorIndustry>
           infoWindow: InfoWindow(
             title: "Receptacle",
             onTap: () {
-              // showDialog(
-              //     useRootNavigator: false,
-              //     context: context,
-              //     builder: (context) {
-              //       return InterventionPopUp(context, location);
-              //     });
+              showDialog(
+                  useRootNavigator: false,
+                  context: context,
+                  builder: (context) {
+                    return ReceptaclePopUp(context, location);
+                  });
             },
           ),
         ),
@@ -129,20 +157,26 @@ class _SupervisorIndustryState extends ConsumerState<SupervisorIndustry>
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(
-          "RIWAMA",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).primaryColor,
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(Icons.more_vert),
+            Text(
+              "RIWAMA",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ],
         ).onTap(() {
-          goto(context, Menu.routeName, null);
+          Scaffold.of(context).openDrawer();
         }),
         actions: [
           IconButton(
             onPressed: () {
-              Scaffold.of(context).openEndDrawer();
+              goto(context, Menu.routeName, null);
             },
             icon: Icon(Icons.menu),
           ),

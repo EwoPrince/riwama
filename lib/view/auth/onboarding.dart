@@ -44,14 +44,13 @@ class _OnboardingState extends State<Onboarding> {
                 context: context,
               ),
               onBoarding(
-                imgUrl: "assets/on2.png",
+                imgUrl: "assets/on2.jpg",
                 title: "RIWAMA Services",
-                subTitle:
-                    "Experience Streamlined waste collection processes.",
+                subTitle: "Experience Streamlined waste collection processes.",
                 context: context,
               ),
               onBoarding(
-                imgUrl: "assets/on3.jpg",
+                imgUrl: "assets/on3.jpeg",
                 title: "Why Choose The RIWAMA Mobile App",
                 subTitle:
                     "Just with a few clicks you would promote better waste management practices and Make the Surroundings more Enjoyable.",
@@ -78,7 +77,6 @@ class _OnboardingState extends State<Onboarding> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
           if (page < 3) {
             setState(() {
               page++;
@@ -107,41 +105,53 @@ class _OnboardingState extends State<Onboarding> {
     required String subTitle,
     required BuildContext context,
   }) {
-    return Column(
+    var size = MediaQuery.of(context).size;
+    return Stack(
       children: [
         SizedBox(
-          height: 400,
+          height: size.height,
+          width: size.width,
           child: Image.asset(
             imgUrl,
+            fit: BoxFit.fitHeight,
           ),
         ),
-        Expanded(
-          child: SizedBox(
-            width: 600,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 40,
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge
-                  ),
-                  SizedBox(height: 60),
-                  Text(
-                    subTitle,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium,
-                  ),
-                ],
+        Column(
+          children: [
+            SizedBox(height: 400),
+            SizedBox(
+              width: 600,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 40,
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            color: Colors.green.shade300,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 32,
+                          ),
+                    ),
+                    SizedBox(height: 30),
+                    Text(
+                      subTitle,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                          ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ],
     );

@@ -3,16 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riwama/model/interventionRequest.dart';
 import 'package:riwama/model/pickupRequest.dart';
+import 'package:riwama/model/receptacle.dart';
+import 'package:riwama/model/tow.dart';
 import 'package:riwama/states/signin_state.dart';
 import 'package:riwama/states/verified_state.dart';
 import 'package:riwama/view/Billing/Billing.dart';
-import 'package:riwama/view/Supervisor/add_slide.dart';
-import 'package:riwama/view/Supervisor/receptacle_sample.dart';
+import 'package:riwama/view/Supervisor/slide/add_slide.dart';
+import 'package:riwama/view/Supervisor/receptacle/receptacle_sample.dart';
+import 'package:riwama/view/Supervisor/receptacle/repectacle_list.dart';
+import 'package:riwama/view/Supervisor/slide/slide_list.dart';
 import 'package:riwama/view/Supervisor/supervisor_form.dart';
+import 'package:riwama/view/Supervisor/receptacle/view_receptacle.dart';
 import 'package:riwama/view/account/account_information.dart';
 import 'package:riwama/view/account/deactivate.dart';
 import 'package:riwama/view/account/general_setting.dart';
 import 'package:riwama/view/account/logout.dart';
+import 'package:riwama/view/industry/Towing/towing_widget/request_towing_pickup.dart';
+import 'package:riwama/view/industry/Towing/view_towing/clear_towing.dart';
+import 'package:riwama/view/industry/Towing/view_towing/list_towing.dart';
+import 'package:riwama/view/industry/Towing/view_towing/towing_view.dart';
+import 'package:riwama/view/industry/intervention/view_intervention/clear_intervention.dart';
+import 'package:riwama/view/industry/pickupRequest/view_request/clear_pickup.dart';
 import 'package:riwama/view/profile/edit_pic_profile.dart';
 import 'package:riwama/view/profile/edit_profile.dart';
 import 'package:riwama/view/profile/editx/first_name.dart';
@@ -265,6 +276,24 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+
+    GoRoute(
+      path: TowList.routeName,
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: TowList(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity:
+                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          },
+        );
+      },
+    ),
+
     GoRoute(
       path: PickupRow.routeName,
       pageBuilder: (context, state) {
@@ -298,6 +327,61 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+
+    GoRoute(
+      path: ReceptacleList.routeName,
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: ReceptacleList(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity:
+                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          },
+        );
+      },
+    ),
+
+    GoRoute(
+      path: SlideList.routeName,
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: SlideList(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity:
+                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          },
+        );
+      },
+    ),
+
+    GoRoute(
+      path: ReceptacleView.routeName,
+      pageBuilder: (context, state) {
+        final snap = state.extra as Receptacle;
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: ReceptacleView(
+            snap: snap,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity:
+                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          },
+        );
+      },
+    ),
+
     GoRoute(
       path: PickupView.routeName,
       pageBuilder: (context, state) {
@@ -337,6 +421,88 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+
+    GoRoute(
+      path: ClearIntervention.routeName,
+      pageBuilder: (context, state) {
+        final snap = state.extra as Interventionrequest;
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: ClearIntervention(
+            snap: snap,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity:
+                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          },
+        );
+      },
+    ),
+
+
+    GoRoute(
+      path: ClearPickup.routeName,
+      pageBuilder: (context, state) {
+        final snap = state.extra as PickupRequest;
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: ClearPickup(
+            snap: snap,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity:
+                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          },
+        );
+      },
+    ),
+
+    GoRoute(
+      path: ClearTowing.routeName,
+      pageBuilder: (context, state) {
+        final snap = state.extra as TowRequest;
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: ClearTowing(
+            snap: snap,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity:
+                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          },
+        );
+      },
+    ),
+
+    GoRoute(
+      path: TowingView.routeName,
+      pageBuilder: (context, state) {
+        final snap = state.extra as TowRequest;
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: TowingView(
+            snap: snap,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity:
+                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          },
+        );
+      },
+    ),
+
     GoRoute(
       path: Timing.routeName,
       pageBuilder: (context, state) {
@@ -399,6 +565,30 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+
+    GoRoute(
+      path: RequestInstantTow.routeName,
+      pageBuilder: (context, state) {
+        final data = state.extra as Map<String, String>;
+        final lat = data['lat']!;
+        final lot = data['lot']!;
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: RequestInstantTow(
+            lat: lat,
+            lon: lot,
+          ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity:
+                  CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+              child: child,
+            );
+          },
+        );
+      },
+    ),
+
     GoRoute(
       path: CamaraPost.routeName,
       pageBuilder: (context, state) {
@@ -431,6 +621,7 @@ final GoRouter router = GoRouter(
         );
       },
     ),
+
     // GoRoute(
     //   path: VideoPost.routeName,
     //   pageBuilder: (context, state) {
@@ -447,6 +638,7 @@ final GoRouter router = GoRouter(
     //     );
     //   },
     // ),
+
     GoRoute(
       path: MobileChatScreen.routeName,
       pageBuilder: (context, state) {

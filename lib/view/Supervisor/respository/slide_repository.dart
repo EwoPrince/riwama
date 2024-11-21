@@ -74,7 +74,7 @@ class SlideRepository {
         );
   }
 
-  Future<String> deleteInterventionRequest(
+  Future<String> deleteSlide(
     String slideId,
   ) async {
     String res = "Some error occurred";

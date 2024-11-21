@@ -54,31 +54,8 @@ When developing a Flutter mobile app for the public from the Rivers State Waste 
    - **User Activity Dashboard:** Provide the agency with a dashboard to monitor app usage, service requests, and issue reports.
    - **Performance Metrics:** Track the performance of waste collection services, response times to reported issues, and user satisfaction.
 
-### 11. **Language & Localization:**
-   - **Multiple Languages:** Include support for English and local languages spoken in Rivers State to ensure accessibility.
-   - **Cultural Sensitivity:** Ensure that the content is culturally appropriate for the region.
-
-### 12. **Offline Access:**
+### 11. **Offline Access:**
    - **Limited Offline Functionality:** Provide basic features like waste collection schedules, waste disposal guides, and report creation even when users are offline. Synchronize data when back online.
-
-### 13. **Gamification (Optional):**
-   - **Rewards for Recycling:** Introduce a points-based system where users can earn rewards or badges for proper waste segregation and timely reporting of issues.
-
-### 14. **Environmental Impact Metrics:**
-   - **Carbon Footprint Calculator:** Show users how their waste management habits impact the environment.
-   - **Sustainability Tips:** Provide daily or weekly tips on how to reduce waste and promote sustainable living.
 
 By focusing on these key features, the app can help the Rivers State Waste Management Agency engage the public effectively, streamline waste collection processes, and promote better waste management practices.
 
-
-
-
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

@@ -27,7 +27,7 @@ class USerTile extends ConsumerWidget {
         shape: BoxShape.circle,
       ),
       title: Text(
-        US.name,
+        US.firstName,
         style: TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 18,
@@ -68,7 +68,7 @@ class USerTileMessage extends ConsumerWidget {
         shape: BoxShape.circle,
       ),
       title: Text(
-        US.name,
+        US.firstName,
         style: TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 18,

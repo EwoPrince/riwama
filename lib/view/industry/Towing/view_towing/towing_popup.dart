@@ -1,27 +1,26 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:riwama/model/receptacle.dart';
-import 'package:riwama/view/industry/intervention/view_intervention/intervention_view.dart';
+import 'package:riwama/model/tow.dart';
+import 'package:riwama/view/industry/Towing/view_towing/towing_view.dart';
 import 'package:riwama/widgets/button.dart';
 import 'package:riwama/x.dart';
 
-Widget ReceptaclePopUp(
+Widget TowingPopUp(
   BuildContext context,
-  Receptacle data,
+  TowRequest data,
 ) {
   final size = MediaQuery.of(context).size;
   return Dialog(
     child: Container(
       padding: EdgeInsets.all(8.0),
       width: size.width * 0.65,
-      height: size.height * 0.4,
+      height: size.height * 0.45,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 10),
           Text(
-            "Receptacle PopUp",
+            "Tow Service Request",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -33,7 +32,7 @@ Widget ReceptaclePopUp(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Updated on :',
+                'Post on :',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -47,7 +46,7 @@ Widget ReceptaclePopUp(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Updated by :',
+                'Post by :',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -58,27 +57,11 @@ Widget ReceptaclePopUp(
           ),
           SizedBox(width: 6),
           SizedBox(
-            width: size.width * 0.62,
-            height: size.height * 0.18,
-            child: LayoutBuilder(builder: (context, short) {
-              return ConstrainedBox(
-                constraints: short,
-                child: ExtendedImage.network(
-                  data.profImage,
-                  fit: BoxFit.contain,
-                  cache: true,
-                  cacheMaxAge: Duration(days: 7),
-                ),
-              );
+            width: size.width * 0.4,
+            child: button(context, 'View', () {
+              goto(context, TowingView.routeName, data);
             }),
           ),
-          SizedBox(width: 6),
-          // SizedBox(
-          //   width: size.width * 0.4,
-          //   child: button(context, 'View', () {
-          //     goto(context, InterventionView.routeName, data);
-          //   }),
-          // ),
         ],
       ),
     ),

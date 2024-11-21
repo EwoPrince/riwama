@@ -141,7 +141,7 @@ class ChatRepository {
 
       profiles[user.uid] = {
         "uid": user.uid,
-        "username": user.name,
+        "username": user.firstName,
         "profilePic": user.photoUrl,
       };
 
@@ -191,7 +191,7 @@ class ChatRepository {
 
       profiles[user.uid] = {
         "uid": user.uid,
-        "username": user.name,
+        "username": user.firstName,
         "profilePic": user.photoUrl,
       };
 

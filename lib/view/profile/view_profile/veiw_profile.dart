@@ -217,7 +217,7 @@ class _ViewProfileState extends ConsumerState<ViewProfile>
                                     ),
                                     SizedBox(height: 10),
                                     Text(
-                                      userData.name,
+                                      userData.firstName,
                                       softWrap: true,
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)

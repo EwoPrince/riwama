@@ -3,25 +3,24 @@ import 'package:firebase_auth/firebase_auth.dart' as FAuth;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:riwama/model/pickupRequest.dart';
-import 'package:riwama/model/PickupRequest_enum.dart';
+import 'package:riwama/model/tow.dart';
 import 'package:riwama/model/user.dart';
 import 'package:riwama/services/notification_service.dart';
 import 'package:riwama/x.dart';
 import 'package:uuid/uuid.dart';
 
-final PickupRequestRepositoryProvider = Provider(
-  (ref) => PickupRequestRepository(
+final TowRequestRepositoryProvider = Provider(
+  (ref) => TowRequestRepository(
     firestore: FirebaseFirestore.instance,
     auth: FAuth.FirebaseAuth.instance,
   ),
 );
 
-class PickupRequestRepository {
+class TowRequestRepository {
   final FirebaseFirestore firestore;
   final FAuth.FirebaseAuth auth;
 
-  PickupRequestRepository({
+  TowRequestRepository({
     required this.firestore,
     required this.auth,
   });
@@ -35,14 +34,13 @@ class PickupRequestRepository {
   }) async {
     try {
       var datePublished = DateTime.now();
-      var pickuprequestId = const Uuid().v1();
+      var TowRequestId = const Uuid().v1();
       _sendRequest(
         name: user.firstName,
         profImage: user.photoUrl,
-        description: '',
+        description: user.phone,
         uid: user.uid,
-        pickupRequestId: pickuprequestId,
-        pickupType: type.toPickupEnum(),
+        TowRequestId: TowRequestId,
         datePublished: datePublished,
         lat: lat,
         lon: lon,
@@ -60,38 +58,36 @@ class PickupRequestRepository {
     required String profImage,
     required String description,
     required String uid,
-    required String pickupRequestId,
-    required PickupRequestEnum pickupType,
+    required String TowRequestId,
     required DateTime datePublished,
     required String lon,
     required String lat,
   }) async {
-    final pickupRequest = PickupRequest(
+    final towRequest = TowRequest(
       name: name,
       profImage: profImage,
-      description: description,
+      description: auth.currentUser!.phoneNumber ?? '0000000',
       uid: auth.currentUser!.uid,
-      PickupRequestId: pickupRequestId,
-      type: pickupType,
+      TowRequestId: TowRequestId,
       datePublished: datePublished,
       cleared: false,
       lon: lon,
       lat: lat,
     );
 
-    await firestore.collection('PickupRequest').doc(pickupRequestId).set(
-          pickupRequest.toMap(),
+    await firestore.collection('TowRequest').doc(TowRequestId).set(
+          towRequest.toMap(),
         );
   }
 
   Future<String> deletePost(
-    String pickupRequestId,
+    String TowRequestId,
   ) async {
     String res = "Some error occurred";
     try {
-      await firestore.collection('PickupRequest').doc(pickupRequestId).delete();
+      await firestore.collection('TowRequest').doc(TowRequestId).delete();
       await deleteToStorage(
-        'pickupId/$pickupRequestId',
+        'TowRequest/$TowRequestId',
       );
 
       res = 'success';

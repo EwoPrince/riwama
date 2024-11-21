@@ -3,6 +3,7 @@ import 'package:riwama/model/interventionRequest.dart';
 import 'package:riwama/model/pickupRequest.dart';
 import 'package:riwama/model/receptacle.dart';
 import 'package:riwama/model/slide.dart';
+import 'package:riwama/model/tow.dart';
 
 class IndustryService {
 
@@ -36,6 +37,25 @@ class IndustryService {
       for (QueryDocumentSnapshot document in event.docs) {
         Receptacle pr =
             Receptacle.fromMap(document.data() as Map<String, dynamic>);
+        R.add(pr);
+      }
+
+      return R;
+    });
+  }
+
+
+  static Stream<List<TowRequest>> fetchTowRequest() {
+    return FirebaseFirestore.instance
+        .collection('TowRequest')
+        .orderBy('datePublished', descending: true)
+        .snapshots()
+        .map((QuerySnapshot event) {
+      List<TowRequest> R = [];
+
+      for (QueryDocumentSnapshot document in event.docs) {
+        TowRequest pr =
+            TowRequest.fromMap(document.data() as Map<String, dynamic>);
         R.add(pr);
       }
 

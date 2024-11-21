@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riwama/view/industry/Towing/towing_widget/request_towing_pickup.dart';
 import 'package:riwama/view/industry/intervention/intervention_widget/sample_select.dart';
 import '../view/industry/pickupRequest/request_widget/request_instant_pickup.dart';
 import '../x.dart';
@@ -28,16 +29,17 @@ void XshowModalBottomSheet(BuildContext context, ref) {
             SizedBox(height: 12),
             overlayButton(
               context,
-              'Request Instant Pickup',
+              'Request Instant Waste Pickup',
               () {
                 XshowRIPModalBottomSheet(context, ref);
               },
               true,
               false,
             ),
+            SizedBox(height: 1),
             overlayButton(
               context,
-              'Request for Intervention',
+              'Request RIWAMA Intervention',
               () {
                 goto(
                   context,
@@ -52,15 +54,12 @@ void XshowModalBottomSheet(BuildContext context, ref) {
               context,
               'Request for Vechicle Towing',
               () {
-                goto(
-                  context,
-                  SampleSelect.routeName,
-                  null,
-                );
+                XshowTowingBottomSheet(context, ref);
               },
               false,
               false,
             ),
+            SizedBox(height: 1),
             overlayButton(
               context,
               'Cancel',

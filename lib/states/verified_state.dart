@@ -25,7 +25,7 @@ class _VerifiedStateState extends ConsumerState<VerifiedState> {
   var uid = FirebaseAuth.instance.currentUser!.uid;
 
   final startlist = [
-    "Dumping Time remains 6pm to 10pm Everyday"
+    "Dumping Time remains 6pm to 10pm Everyday",
     "Making Waste Management Simple & Smart.",
     "Let\'s Keep Rivers State Beautiful!",
     "Effortless Waste Management at Your Fingertips.",
@@ -64,6 +64,7 @@ class _VerifiedStateState extends ConsumerState<VerifiedState> {
     ref.watch(industryProvider).fetchWorldReceptacles();
     ref.watch(industryProvider).fetchWorldPickupRequest();
     ref.watch(industryProvider).fetchWorldInterventionRequest();
+    ref.watch(industryProvider).fetchWorldTowRequest();
     ref.watch(mapProvider).fetchLocation();
   }
 

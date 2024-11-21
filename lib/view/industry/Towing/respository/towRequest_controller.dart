@@ -1,3 +1,4 @@
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,42 +7,43 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riwama/provider/auth_provider.dart';
 import 'package:riwama/provider/common_firebase_storage_repository.dart';
 import 'package:riwama/services/notification_service.dart';
-import 'intervention_repository.dart';
+import 'package:riwama/view/industry/Towing/respository/towRequest_repository.dart';
 
-final InterventionRequestControllerProvider = Provider((ref) {
-  final interventionRequestRepository =
-      ref.watch(InterventionRequestRepositoryProvider);
-  return InterventionRequestController(
-    interventionRequestRepository: interventionRequestRepository,
+
+final TowRequestControllerProvider = Provider((ref) {
+  final towRequestRepository = ref.watch(TowRequestRepositoryProvider);
+
+
+  return TowRequestController(
+    towRequestRepository: towRequestRepository,
     ref: ref,
   );
 });
 
-class InterventionRequestController {
-  final InterventionRequestRepository interventionRequestRepository;
+class TowRequestController {
+  final TowRequestRepository towRequestRepository;
   final ProviderRef ref;
 
-  InterventionRequestController({
-    required this.interventionRequestRepository,
+  TowRequestController({
+    required this.towRequestRepository,
     required this.ref,
   });
 
-  Future<String> sendInterventionRequest(
+  Future<String> sendRequestTow(
     BuildContext context,
     String lon,
     String lat,
-    File file,
+    String type,
   ) async {
     String res = "Some error occurred";
     try {
       final user = ref.watch(authProvider).user;
-      interventionRequestRepository.sendInterventionRequest(
+      towRequestRepository.sendRequest(
         context: context,
-        file: file,
-        user: user!,
-        lat: lat,
         lon: lon,
-        ref: ref,
+        lat: lat,
+        type: type,
+        user: user!,
       );
       res = 'success';
     } catch (err) {
@@ -50,24 +52,27 @@ class InterventionRequestController {
     return res;
   }
 
-  Future<String> clearIntervention(
-    String interventionId,
+  Future<String> clearRequest(
+    String towId,
     String uid,
     File file,
   ) async {
     String res = "Some error occurred";
     try {
       {
+
+        
+      
         String imageUrl = await ref
             .read(commonFirebaseStorageRepositoryProvider)
             .storeFileToFirebase(
-              'Intervention/$interventionId',
+              'TowRequest/$towId',
               file,
             );
-
+            
         await FirebaseFirestore.instance
-            .collection('Interventionrequest')
-            .doc(interventionId)
+            .collection('TowRequest')
+            .doc(towId)
             .update({
           'ClearedByUid': uid,
           'cleared': true,
@@ -77,8 +82,8 @@ class InterventionRequestController {
         // await ref.read(authProvider).getScopeUserData(postOwnerId);
         final fcmToken = ref.read(authProvider).scopeUser!.fcmToken;
         final user = ref.read(authProvider).user!;
-        NotificationService.SendNotification(fcmToken, 'RIWAMA',
-            '${user.firstName} cleared your intervention request');
+        NotificationService.SendNotification(
+            fcmToken, 'RIWAMA', '${user.firstName} Cleared your Tow Request');
       }
       res = 'success';
     } catch (err) {
@@ -87,18 +92,18 @@ class InterventionRequestController {
     return res;
   }
 
-  Future<String> recordPostView(String postId) async {
-    String res = "Some error occurred";
-    try {
-      // Increment the view count by 1
-      await FirebaseFirestore.instance.collection('posts').doc(postId).update({
-        'views': FieldValue.increment(1),
-      });
+  // Future<String> recordPostView(String postId) async {
+  //   String res = "Some error occurred";
+  //   try {
+  //     // Increment the view count by 1
+  //     await FirebaseFirestore.instance.collection('posts').doc(postId).update({
+  //       'views': FieldValue.increment(1),
+  //     });
 
-      res = 'success';
-    } catch (err) {
-      res = err.toString();
-    }
-    return res;
-  }
+  //     res = 'success';
+  //   } catch (err) {
+  //     res = err.toString();
+  //   }
+  //   return res;
+  // }
 }

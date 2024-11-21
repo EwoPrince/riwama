@@ -30,7 +30,7 @@ class _LandState extends ConsumerState<Land> with WidgetsBindingObserver {
       canPop: false,
       child: Scaffold(
         body: user!.accountLevel == 1 ? Industry() : SupervisorIndustry(),
-        endDrawer: NavDrawer(),
+        drawer: NavDrawer(),
       ),
     );
   }

@@ -2,56 +2,32 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:riwama/model/pickupRequest.dart';
+import 'package:riwama/model/tow.dart';
 import 'package:riwama/provider/auth_provider.dart';
 import 'package:riwama/services/report_service.dart';
-import 'package:riwama/view/industry/pickupRequest/view_request/clear_pickup.dart';
-import 'package:riwama/view/industry/xview/timing.dart';
-import 'package:riwama/view/industry/pickupRequest/respository/pickupRequest_repository.dart';
-import 'package:riwama/view/industry/pickupRequest/view_request/pickup_display_section.dart';
+import 'package:riwama/view/industry/Towing/respository/towRequest_repository.dart';
+import 'package:riwama/view/industry/Towing/view_towing/clear_towing.dart';
+import 'package:riwama/view/industry/Towing/view_towing/towing_display_section.dart';
 import 'package:riwama/widgets/button.dart';
 import 'package:riwama/widgets/usertile.dart';
 import 'package:riwama/x.dart';
 import 'package:swipe_to/swipe_to.dart';
 
-class PickupView extends ConsumerStatefulWidget {
-  final PickupRequest snap;
-  PickupView({required this.snap});
-  static const routeName = '/PickupView';
+class TowingView extends ConsumerStatefulWidget {
+  final TowRequest snap;
+  TowingView({required this.snap});
+  static const routeName = '/TowingView';
 
   @override
-  ConsumerState<PickupView> createState() => _PickupViewState();
+  ConsumerState<TowingView> createState() => _TowingViewState();
 }
 
-class _PickupViewState extends ConsumerState<PickupView> {
-  _selectDate(BuildContext context, DateTime choosen) async {
-    DateTime? selectedDate;
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: choosen,
-      firstDate: DateTime(2022),
-      lastDate: DateTime.now(),
-    );
-
-    if (pickedDate != null && pickedDate != selectedDate) {
-      setState(() {
-        selectedDate = pickedDate;
-        goto(
-          context,
-          Timing.routeName,
-          selectedDate!,
-        );
-      });
-    }
-  }
-
+class _TowingViewState extends ConsumerState<TowingView> {
   deletePost(String postId) async {
-    ref.read(PickupRequestRepositoryProvider).deletePost(
-          postId,
-        );
+    ref.read(TowRequestRepositoryProvider).deletePost(postId);
     showMessage(
       context,
-      'Post Deleted',
+      'Tow Request Deleted',
     );
   }
 
@@ -63,7 +39,7 @@ class _PickupViewState extends ConsumerState<PickupView> {
       appBar: AppBar(
         centerTitle: false,
         title: Text(
-          'Pick Up Request',
+          'Tow Service Request',
           softWrap: true,
           overflow: TextOverflow.fade,
           style: TextStyle(
@@ -96,8 +72,8 @@ class _PickupViewState extends ConsumerState<PickupView> {
                                         textAlign: TextAlign.center,
                                       )),
                                     ).onTap(() {
-                                      deletePost(widget.snap.PickupRequestId
-                                          .toString());
+                                      deletePost(
+                                          widget.snap.TowRequestId.toString());
                                       Navigator.of(context).pop();
                                     }),
                                   )
@@ -119,7 +95,7 @@ class _PickupViewState extends ConsumerState<PickupView> {
                           padding: EdgeInsets.symmetric(vertical: 16),
                           shrinkWrap: true,
                           children: [
-                            'Report this request',
+                            'Report Post',
                           ].asMap().entries.map(
                             (entry) {
                               int index = entry.key;
@@ -137,8 +113,9 @@ class _PickupViewState extends ConsumerState<PickupView> {
                                 // Conditionally apply different functions based on the index or content
                                 if (index == 0) {
                                   // Function for 'Report Post'
-                                  ReportService().reportPost('Report Post',
-                                      widget.snap.PickupRequestId);
+                                  ReportService().reportPost(
+                                      'Report Tow Request',
+                                      widget.snap.TowRequestId);
                                 } else if (index == 1) {
                                   // Function for 'I Don't want to see this again'
                                   showMessage(context,
@@ -180,9 +157,7 @@ class _PickupViewState extends ConsumerState<PickupView> {
                             fontSize: 16, fontWeight: FontWeight.w600)),
                     Text(
                       DateFormat.yMMMd().format(widget.snap.datePublished),
-                    ).onTap(() {
-                      _selectDate(context, widget.snap.datePublished);
-                    }),
+                    ),
                   ],
                 ),
                 SizedBox(height: 6),
@@ -194,9 +169,10 @@ class _PickupViewState extends ConsumerState<PickupView> {
                             fontSize: 16, fontWeight: FontWeight.w600)),
                     Text(
                       widget.snap.name,
-                    ),
+                    )
                   ],
                 ),
+
                 if (widget.snap.cleared == true) SizedBox(height: 6),
                 if (widget.snap.cleared == true)
                   Column(
@@ -213,10 +189,11 @@ class _PickupViewState extends ConsumerState<PickupView> {
                       )
                     ],
                   ),
+
                 if (widget.snap.cleared == true) SizedBox(height: 6),
                 if (widget.snap.cleared == true)
                   Text(
-                    "Sample after Intervention:",
+                    "Sample after Tow Request:",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 if (widget.snap.cleared == true)
@@ -235,26 +212,27 @@ class _PickupViewState extends ConsumerState<PickupView> {
                     );
                   }),
                 ),
+
                 SizedBox(height: 6),
+
+                /// IMAGE SECTION OF THE POST
                 Text(
-                  "Location for PickUp:",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  "Location of Tow Request:",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(
                   width: ize.width * 0.98,
-                  height: ize.height * 0.35,
-                  child: PickupDisplaySection(
+                  height: ize.height * 0.45,
+                  child: TowingDisplaySection(
                     snap: widget.snap,
                   ),
                 ),
+
                 SizedBox(height: 12),
                 user.accountLevel >= 2
                     ? widget.snap.cleared != true
                         ? button(context, 'Clear Request', () {
-                            goto(context, ClearPickup.routeName, widget.snap);
+                            goto(context, ClearTowing.routeName, widget.snap);
                           })
                         : SizedBox.shrink()
                     : SizedBox.shrink(),

@@ -6,10 +6,10 @@ import 'package:riwama/model/interventionRequest.dart';
 import 'package:riwama/provider/auth_provider.dart';
 import 'package:riwama/services/report_service.dart';
 import 'package:riwama/view/industry/intervention/respository/intervention_repository.dart';
-import 'package:riwama/view/industry/intervention/view_intervention/view_widgets/intervention_bottom.dart';
-import 'package:riwama/view/industry/intervention/view_intervention/view_widgets/intervention_display_section.dart';
-import 'package:riwama/view/industry/xview/timing.dart';
+import 'package:riwama/view/industry/intervention/view_intervention/clear_intervention.dart';
+import 'package:riwama/view/industry/intervention/view_intervention/intervention_display_section.dart';
 import 'package:riwama/widgets/button.dart';
+import 'package:riwama/widgets/usertile.dart';
 import 'package:riwama/x.dart';
 import 'package:swipe_to/swipe_to.dart';
 
@@ -23,27 +23,6 @@ class InterventionView extends ConsumerStatefulWidget {
 }
 
 class _InterventionViewState extends ConsumerState<InterventionView> {
-  _selectDate(BuildContext context, DateTime choosen) async {
-    DateTime? selectedDate;
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: choosen,
-      firstDate: DateTime(2022),
-      lastDate: DateTime.now(),
-    );
-
-    if (pickedDate != null && pickedDate != selectedDate) {
-      setState(() {
-        selectedDate = pickedDate;
-        goto(
-          context,
-          Timing.routeName,
-          selectedDate!,
-        );
-      });
-    }
-  }
-
   deletePost(String postId) async {
     ref
         .read(InterventionRequestRepositoryProvider)
@@ -180,9 +159,7 @@ class _InterventionViewState extends ConsumerState<InterventionView> {
                             fontSize: 16, fontWeight: FontWeight.w600)),
                     Text(
                       DateFormat.yMMMd().format(widget.snap.datePublished),
-                    ).onTap(() {
-                      _selectDate(context, widget.snap.datePublished);
-                    }),
+                    ),
                   ],
                 ),
                 SizedBox(height: 6),
@@ -197,10 +174,29 @@ class _InterventionViewState extends ConsumerState<InterventionView> {
                     )
                   ],
                 ),
+                if (widget.snap.cleared == true) SizedBox(height: 6),
+                if (widget.snap.cleared == true)
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Cleared by :",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
+                      UserTile(
+                        Uid: widget.snap.ClearedByUid!,
+                      )
+                    ],
+                  ),
                 SizedBox(height: 6),
                 Text(
-                  "Sample for Inrervention:",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  "Sample for Intervention:",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 SizedBox(
                   width: ize.width * 0.97,
@@ -217,10 +213,29 @@ class _InterventionViewState extends ConsumerState<InterventionView> {
                     );
                   }),
                 ),
-
+                if (widget.snap.cleared == true) SizedBox(height: 6),
+                if (widget.snap.cleared == true)
+                  Text(
+                    "Sample after Intervention:",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                if (widget.snap.cleared == true)
+                  SizedBox(
+                    width: ize.width * 0.97,
+                    height: ize.height * 0.45,
+                    child: LayoutBuilder(builder: (context, short) {
+                      return ConstrainedBox(
+                        constraints: short,
+                        child: ExtendedImage.network(
+                          widget.snap.profImage,
+                          fit: BoxFit.contain,
+                          cache: true,
+                          cacheMaxAge: Duration(days: 7),
+                        ),
+                      );
+                    }),
+                  ),
                 SizedBox(height: 6),
-
-                /// IMAGE SECTION OF THE POST
                 Text(
                   "Location for Intervention:",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -232,16 +247,15 @@ class _InterventionViewState extends ConsumerState<InterventionView> {
                     snap: widget.snap,
                   ),
                 ),
-
-                InterventionBottom(
-                  snap: widget.snap,
-                ),
-
                 SizedBox(height: 12),
-                user.accountLevel == 2
-                    ? button(context, 'Clear Request', () {})
+                user.accountLevel >= 2
+                    ? widget.snap.cleared != true
+                        ? button(context, 'Clear Request', () {
+                            goto(context, ClearIntervention.routeName,
+                                widget.snap);
+                          })
+                        : SizedBox.shrink()
                     : SizedBox.shrink(),
-
                 SizedBox(height: 12),
               ],
             ),

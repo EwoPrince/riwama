@@ -29,7 +29,7 @@ Widget IRBitmap(BuildContext context) {
         Container(
           height: 12,
           width: 3,
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Colors.grey.shade800,
         ),
       ],
     ),
@@ -65,7 +65,43 @@ Widget PRBitmap(BuildContext context) {
         Container(
           height: 12,
           width: 3,
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Colors.grey.shade800,
+        ),
+      ],
+    ),
+  );
+}
+
+Widget TBitmap(BuildContext context) {
+  return SizedBox(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.blueGrey,
+            shape: BoxShape.circle,
+            border: Border.all(
+              width: 3,
+              color: Theme.of(context).scaffoldBackgroundColor,
+            ),
+          ),
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child: Icon(
+                Icons.fire_truck_outlined,
+                size: 30,
+                color: Theme.of(context).scaffoldBackgroundColor,
+              ),
+            ),
+          ),
+        ),
+        Container(
+          height: 12,
+          width: 3,
+          color: Colors.grey.shade800,
         ),
       ],
     ),
@@ -80,7 +116,7 @@ Widget DropBitmap(BuildContext context) {
       children: [
         Container(
           decoration: BoxDecoration(
-      color: Colors.green,
+            color: Colors.green,
             shape: BoxShape.circle,
             border: Border.all(
               width: 3,
@@ -91,7 +127,7 @@ Widget DropBitmap(BuildContext context) {
             child: Padding(
               padding: EdgeInsets.all(5),
               child: Icon(
-        Icons.recycling,
+                Icons.recycling,
                 size: 30,
                 color: Theme.of(context).scaffoldBackgroundColor,
               ),
@@ -101,7 +137,7 @@ Widget DropBitmap(BuildContext context) {
         Container(
           height: 12,
           width: 3,
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Colors.grey.shade800,
         ),
       ],
     ),
@@ -116,7 +152,7 @@ Widget MeBitmap(BuildContext context) {
       children: [
         Container(
           decoration: BoxDecoration(
-      color: Colors.deepOrange,
+            color: Colors.green,
             shape: BoxShape.circle,
             border: Border.all(
               width: 3,
@@ -127,7 +163,7 @@ Widget MeBitmap(BuildContext context) {
             child: Padding(
               padding: EdgeInsets.all(5),
               child: Icon(
-        Icons.recycling,
+                Icons.accessibility,
                 size: 30,
                 color: Theme.of(context).scaffoldBackgroundColor,
               ),
@@ -137,7 +173,7 @@ Widget MeBitmap(BuildContext context) {
         Container(
           height: 12,
           width: 3,
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: Colors.grey.shade800,
         ),
       ],
     ),

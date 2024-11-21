@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riwama/provider/industry_provider.dart';
 import 'package:riwama/provider/map_provider.dart';
+import 'package:riwama/view/Supervisor/receptacle/receptacle_popUp.dart';
 import 'package:riwama/view/dashboard/menu.dart';
 import 'package:riwama/widgets/bitmap.dart';
 import 'package:riwama/widgets/loading.dart';
@@ -42,12 +43,12 @@ class _IndustryState extends ConsumerState<Industry>
           infoWindow: InfoWindow(
             title: "Receptacle",
             onTap: () {
-              // showDialog(
-              //     useRootNavigator: false,
-              //     context: context,
-              //     builder: (context) {
-              //       return InterventionPopUp(context, location);
-              //     });
+              showDialog(
+                  useRootNavigator: false,
+                  context: context,
+                  builder: (context) {
+                    return ReceptaclePopUp(context, location);
+                  });
             },
           ),
         ),
@@ -73,20 +74,26 @@ class _IndustryState extends ConsumerState<Industry>
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(
-          "RIWAMA",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).primaryColor,
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(Icons.more_vert),
+            Text(
+              "RIWAMA",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ],
         ).onTap(() {
-          goto(context, Menu.routeName, null);
+          Scaffold.of(context).openDrawer();
         }),
         actions: [
           IconButton(
             onPressed: () {
-              Scaffold.of(context).openEndDrawer();
+              goto(context, Menu.routeName, null);
             },
             icon: Icon(Icons.menu),
           ),

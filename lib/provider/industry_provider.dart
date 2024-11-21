@@ -4,6 +4,7 @@ import 'package:riwama/model/interventionRequest.dart';
 import 'package:riwama/model/pickupRequest.dart';
 import 'package:riwama/model/receptacle.dart';
 import 'package:riwama/model/slide.dart';
+import 'package:riwama/model/tow.dart';
 import 'package:riwama/services/industry_service.dart';
 
 final industryProvider =
@@ -12,6 +13,7 @@ final industryProvider =
 class IndustryProviders extends ChangeNotifier {
   List<Slide> _slideData = [];
   List<PickupRequest> _worldDataPR = [];
+  List<TowRequest> _worldDataTR = [];
   List<Interventionrequest> _worldDataIR = [];
   List<Receptacle> _recept = [];
   List<PickupRequest> _timePR = [];
@@ -21,6 +23,7 @@ class IndustryProviders extends ChangeNotifier {
 
   List<Slide> get sildeData => _slideData;
   List<PickupRequest> get worldDataPR => _worldDataPR;
+  List<TowRequest> get worldDataTR => _worldDataTR;
   List<Interventionrequest> get worldDataIR => _worldDataIR;
   List<Receptacle> get recept => _recept;
   List<PickupRequest> get timePR => _timePR;
@@ -32,6 +35,20 @@ class IndustryProviders extends ChangeNotifier {
       final Stream<List<Slide>> dataStream = IndustryService.fetchSlides();
       dataStream.listen((data) {
         _slideData = data;
+        notifyListeners();
+      });
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future fetchWorldTowRequest() async {
+    try {
+      final Stream<List<TowRequest>> dataStream =
+          IndustryService.fetchTowRequest();
+      dataStream.listen((data) {
+        _worldDataTR = data;
         notifyListeners();
       });
     } catch (e) {

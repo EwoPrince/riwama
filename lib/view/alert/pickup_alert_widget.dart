@@ -18,7 +18,7 @@ class _PickupAlertState extends ConsumerState<PickupAlert> {
   deletePost(String postId) async {
     ref
         .read(PickupRequestRepositoryProvider)
-        .deletePost(postId, widget.pu.type);
+        .deletePost(postId,);
     showMessage(
       context,
       'Post Deleted',

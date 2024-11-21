@@ -16,39 +16,42 @@ class _SelectCardState extends State<SelectCard> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Container(
-      padding: EdgeInsets.all(8),
-      height: size.height * 0.2,
-      width: size.width * 0.38,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 3,
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 6),
+      child: Container(
+        padding: EdgeInsets.all(8),
+        height: size.height * 0.2,
+        width: size.width * 0.38,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: Theme.of(context).primaryColor,
+            width: 3,
+          ),
+          color: Theme.of(context).colorScheme.inversePrimary.withOpacity(0.3),
         ),
-        color: Theme.of(context).colorScheme.inversePrimary.withOpacity(0.3),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              widget.iconData,
-              size: 50,
-              color: Theme.of(context).primaryColor,
-            ),
-            SizedBox(height: 12),
-            Text(
-              widget.title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                widget.iconData,
+                size: 50,
                 color: Theme.of(context).primaryColor,
               ),
-            ),
-          ],
+              SizedBox(height: 12),
+              Text(
+                widget.title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

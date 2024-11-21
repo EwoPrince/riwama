@@ -5,7 +5,7 @@ import 'package:riwama/provider/auth_provider.dart';
 import 'package:riwama/provider/theme_provider.dart';
 import 'package:riwama/view/Supervisor/supervisor_form.dart';
 import 'package:riwama/view/dashboard/land.dart';
-import 'package:riwama/view/dashboard/menu.dart';
+import 'package:riwama/view/industry/Towing/view_towing/list_towing.dart';
 import 'package:riwama/view/profile/personal_profile.dart';
 import 'package:riwama/view/industry/intervention/view_intervention/list_intervention.dart';
 import 'package:riwama/view/industry/pickupRequest/view_request/pickup_row.dart';
@@ -164,23 +164,23 @@ class _NavDrawerState extends ConsumerState<NavDrawer> {
                       }),
                       SizedBox(height: 12),
                       drawerTile(
+                        Icons.notifications_active_outlined,
+                        'Tow Request List',
+                      ).onTap(() {
+                        goto(
+                          context,
+                          TowList.routeName,
+                          null,
+                        );
+                      }),
+                      SizedBox(height: 12),
+                      drawerTile(
                         Icons.monetization_on_outlined,
                         'Billings',
                       ).onTap(() {
                         goto(
                           context,
                           Billings.routeName,
-                          null,
-                        );
-                      }),
-                      SizedBox(height: 12),
-                      drawerTile(
-                        Icons.menu,
-                        'Menu',
-                      ).onTap(() {
-                        goto(
-                          context,
-                          Menu.routeName,
                           null,
                         );
                       }),

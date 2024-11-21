@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riwama/provider/auth_provider.dart';
 import 'package:riwama/provider/industry_provider.dart';
-import 'package:riwama/view/Supervisor/add_slide.dart';
-import 'package:riwama/view/Supervisor/receptacle_sample.dart';
+import 'package:riwama/view/Supervisor/receptacle/receptacle_sample.dart';
+import 'package:riwama/view/Supervisor/receptacle/repectacle_list.dart';
+import 'package:riwama/view/Supervisor/slide/slide_list.dart';
 import 'package:riwama/view/Supervisor/supervisor_form.dart';
+import 'package:riwama/view/industry/Towing/view_towing/list_towing.dart';
 import 'package:riwama/view/profile/personal_profile.dart';
-import 'package:riwama/view/profile/pic_profile_view.dart';
 import 'package:riwama/view/account/general_setting.dart';
 import 'package:riwama/view/industry/intervention/view_intervention/list_intervention.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -141,6 +142,7 @@ class _MenuState extends ConsumerState<Menu> {
                       : timeHour < 16
                           ? 'Good Afternoon ${user!.firstName}'
                           : 'Good Evening ${user!.firstName}',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
@@ -156,10 +158,11 @@ class _MenuState extends ConsumerState<Menu> {
               SizedBox(height: 8),
               FittedBox(
                 child: Text(
-                  'What Service could we provide you',
+                  'What Service could we provide you ?',
+                  textAlign: TextAlign.start,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                 ),
               ),
@@ -215,7 +218,7 @@ class _MenuState extends ConsumerState<Menu> {
               ),
               SizedBox(height: 3),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: EdgeInsets.symmetric(horizontal: 4),
                 child: SettingsTile(
                   context,
                   Icons.notifications_active_outlined,
@@ -233,7 +236,7 @@ class _MenuState extends ConsumerState<Menu> {
               ),
               SizedBox(height: 3),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: EdgeInsets.symmetric(horizontal: 4),
                 child: SettingsTile(
                         context,
                         Icons.notifications_active_outlined,
@@ -249,24 +252,58 @@ class _MenuState extends ConsumerState<Menu> {
                   );
                 }),
               ),
+              SizedBox(height: 3),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4),
+                child: SettingsTile(
+                        context,
+                        Icons.notifications_active_outlined,
+                        'Tow Request List',
+                        'See a list of Tow Service request you have made',
+                        false,
+                        false)
+                    .onTap(() {
+                  goto(
+                    context,
+                    TowList.routeName,
+                    null,
+                  );
+                }),
+              ),
               user.accountLevel >= 2 ? SizedBox(height: 3) : SizedBox.shrink(),
               user.accountLevel >= 2
                   ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: SettingsTile(context, Icons.add_box, 'Add Slide',
+                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      child: SettingsTile(context, Icons.add_box, 'Slide List',
                               'Update to the RIWAMA Slides', false, false)
                           .onTap(() {
-                        goto(context, AddSlide.routeName, null);
+                        goto(context, SlideList.routeName, null);
                       }),
                     )
                   : SizedBox.shrink(),
               user.accountLevel >= 2 ? SizedBox(height: 3) : SizedBox.shrink(),
               user.accountLevel >= 2
                   ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      padding: EdgeInsets.symmetric(horizontal: 4),
                       child: SettingsTile(
                               context,
-                              Icons.add_location_alt,
+                              Icons.recycling,
+                              'Receptacle List',
+                              'View a list of public Receptacles in all available locations',
+                              false,
+                              false)
+                          .onTap(() {
+                        goto(context, ReceptacleList.routeName, null);
+                      }),
+                    )
+                  : SizedBox.shrink(),
+              user.accountLevel >= 2 ? SizedBox(height: 3) : SizedBox.shrink(),
+              user.accountLevel >= 2
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4),
+                      child: SettingsTile(
+                              context,
+                              Icons.recycling,
                               'Add Receptacle',
                               'Update to the public a Receptacle location',
                               false,
@@ -343,7 +380,7 @@ class _MenuState extends ConsumerState<Menu> {
                 ),
               SizedBox(height: 3),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: EdgeInsets.symmetric(horizontal: 4),
                 child: SettingsTile(
                         context,
                         Icons.settings_outlined,
@@ -361,7 +398,7 @@ class _MenuState extends ConsumerState<Menu> {
               ),
               SizedBox(height: 3),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: EdgeInsets.symmetric(horizontal: 4),
                 child: SettingsTile(
                   context,
                   Icons.help_outline_outlined,

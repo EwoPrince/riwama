@@ -3,7 +3,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riwama/services/pick_file.dart';
-import 'package:riwama/view/Supervisor/add_receptacle.dart';
+import 'package:riwama/view/Supervisor/receptacle/add_receptacle.dart';
 import 'package:riwama/widgets/button.dart';
 import 'package:riwama/widgets/select_card.dart';
 import 'package:riwama/x.dart';
